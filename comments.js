@@ -1,11 +1,18 @@
-// Create web server
+// Create web server which returns the current time
 const http = require('http');
 const port = 3000;
-const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.end('Hello, Codespaces!');
-});
-server.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}/`);
+
+const requestHandler = (request, response) => {
+  console.log(request.url);
+  response.end(`Hello, it's ${new Date().toLocaleTimeString()}`);
+};
+
+const server = http.createServer(requestHandler);
+
+server.listen(port, (err) => {
+  if (err) {
+    return console.log('Error:', err);
+  }
+
+  console.log(`Server is listening on ${port}`);
 });
